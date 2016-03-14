@@ -1,4 +1,13 @@
+*.DS_Store
+
 *.class
+
+*.hi
+*.o
+
+*.pyc
+
+*.exe
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
