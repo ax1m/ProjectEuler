@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -13,23 +14,29 @@ public class ConsecutiveFactors {
 		int num = 0;
 		while(!resultFound) {
 			num++;
-			factorization.put(num, factors(num));
+			factorization.put(num, primeFactors(num));
+			System.out.println((num) + " = " + printFactorization(factorization.get(num)));
 			if(num >= arg) {
 				Set<Map<Integer, Integer>> factorizations = new HashSet<Map<Integer, Integer>>();
 				for(int i = 0; i < arg; i++) {
 					factorizations.add(factorization.get(num - i));
 				}
-				if(factorizations.size() == arg) {
+				boolean unique = false;
+				// TODO -- Add logic
+				if(unique) {
 					resultFound = true;
-					System.out.println(num - (arg-1));
+					for(int i = num; i < num + arg; i++) {
+						System.out.println(i + " = " + printFactorization(factorization.get(i)));
+					}
 				}
 			}
 		}
 	}
 
-	public static Map<Integer, Integer> factors(int number) {
+	public static Map<Integer, Integer> primeFactors(int number) {
 		Map<Integer, Integer> res = new HashMap<Integer, Integer>();
-		for(int i = 2; i < Math.sqrt(number); i++) {
+		int _number = number;
+		for(int i = 2; i < _number; i++) {
 			int count = 0;
 			while(number % i == 0) {
 				number /= i;
@@ -37,7 +44,18 @@ public class ConsecutiveFactors {
 			}
 			if(count > 0) { res.put(i, count); }
 		}
-		if(res.size() == 0) { res.put(number, 1); }
+		return res;
+	}
+
+	public static String printFactorization(Map<Integer, Integer> fac) {
+		String res = "";
+		if(fac.isEmpty()) { res = "PRIME"; }
+		else {
+			Integer[] keys = fac.keySet().toArray(new Integer[fac.size()]);
+			Arrays.sort(keys);
+			for(int i : keys) { res += i + " ^ " + fac.get(i) + " * "; }
+			res = res.substring(0, res.length() - 3);
+		}
 		return res;
 	}
 }
