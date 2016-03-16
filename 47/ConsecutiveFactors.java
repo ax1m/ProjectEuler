@@ -38,8 +38,8 @@ public class ConsecutiveFactors {
 	public static Map<Integer, Integer> primeFactors(int num) { return primeFactors(num, 2); }
 
 	public static Map<Integer, Integer> primeFactors(int num, int div) {
-		if(factorMap.containsKey(num)) { return factorMap.get(num); }
 		Map<Integer, Integer> res = new HashMap<Integer, Integer>();
+		if(factorMap.containsKey(num)) { res.putAll(factorMap.get(num)); return res; }
 		if(num < 0) { num *= -1; res.put(-1, 1); }
 		if(num == 0) { res.put(0, 1); return res; }
 		if(num == 1) { return res; }
