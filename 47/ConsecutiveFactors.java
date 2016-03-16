@@ -1,8 +1,8 @@
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class ConsecutiveFactors {
 
@@ -17,22 +17,37 @@ public class ConsecutiveFactors {
 		while(!resultFound) {
 			num++;
 			factorMap.put(num, primeFactors(num));
-			System.out.println(printFactorization(num));
 			if(num >= arg) {
-				Set<Map<Integer, Integer>> factorizations = new HashSet<Map<Integer, Integer>>();
+				boolean unique = true;
 				for(int i = 0; i < arg; i++) {
-					factorizations.add(factorMap.get(num - i));
+					unique = (factorMap.get(num - i).size() == arg) ? unique : false;
+					if(!unique) { break; }
+					for(int j = i + 1; j < arg; j++) {
+						if(!fullyDistinct(factorMap.get(num - i), factorMap.get(num - (i + j)))) {
+							unique = false;
+							break;
+						}
+					}
 				}
-				boolean unique = false;
-				// TODO -- Add logic
 				if(unique) {
 					resultFound = true;
-					for(int i = num; i < num + arg; i++) {
-						System.out.println(printFactorization(i));
+					for(int i = num - arg; i < num; i++) {
+						System.out.println(printFactorization(i + 1));
 					}
 				}
 			}
 		}
+	}
+
+	public static boolean fullyDistinct(Map<Integer, Integer> facA, Map<Integer, Integer> facB) {
+		boolean res = true;
+		for(int factor : facA.keySet()) {
+			if(facB.containsKey(factor) && facA.get(factor) == facB.get(factor)) {
+				res = false;
+				break;
+			}
+		}
+		return res;
 	}
 
 	public static Map<Integer, Integer> primeFactors(int num) { return primeFactors(num, 2); }
