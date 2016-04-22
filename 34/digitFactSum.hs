@@ -12,4 +12,6 @@ factorial x = x * (fact_mem !! ((fromIntegral x) - 1))
 factDigSum :: Integer -> Integer
 factDigSum x = sum (map factorial (digs x))
 
-main = print (sum [i | i <- [1..2540160], i == (factDigSum i)])
+list = [i | i <- [3..2540160], i == (factDigSum i)]
+
+main = print (sum list)
